@@ -5,14 +5,14 @@ excel_sheet = 'PBS'
 output = 'C:\\Users\\jason\\OneDrive\\Desktop\\data-out.xlsx'
 #endregion
 
-
 # import libraries
 #region
 import pandas as pd
 import numpy as np
 #endregion
 
-# READ FILE and do stuff
+#READ FILE and do stuff
+#region
 column_names = ['desc', 'ID', 'role']
 df_file = pd.read_excel(file_loc_name, sheet_name=excel_sheet, header=None, names = column_names)
 df_file_out = pd.DataFrame(columns=column_names)
@@ -27,7 +27,7 @@ for index, row in df_file.iterrows():
             df_file_out=df_file_out.append(df_temp, ignore_index=True)
     else:
         df_file_out=df_file_out.append(df_file.iloc[index], ignore_index=True)
-        
+#endregion
 
 # OUTPUT FILE
 #region
