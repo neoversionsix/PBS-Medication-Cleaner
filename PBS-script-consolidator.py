@@ -1,8 +1,8 @@
 # Input values
 #region
-file_loc_name = 'C:\\Users\\jason\\OneDrive\\Desktop\\data-out.xlsx'
+file_loc_name = 'C:/PBS/x.xlsx'
 excel_sheet = 'Sheet1'
-output = 'C:\\Users\\jason\\OneDrive\\Desktop\\data-out-consolidated.xlsx'
+output = 'C:/PBS/x-out-2.xlsx'
 #endregion
 
 # import libraries
