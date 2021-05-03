@@ -1,22 +1,17 @@
-# Input values
-#region
-file_loc_name = 'C:/PBS/x.xlsx'
-excel_sheet = 'Sheet1'
-output = 'C:/PBS/x-out-2.xlsx'
-#endregion
-
 # import libraries
-#region
 import pandas as pd
 import numpy as np
-#endregion
+from pathlib import Path, PureWindowsPath
+
+# Input values
+file_loc_name = Path('//whoffice/shared/EMR/BAU/Audit Spreadsheets/PBS audits/202105/Prescriber_type_20210501.txt')
+file_loc_name = PureWindowsPath(file_loc_name)
+output = Path('C:/PBS/x-out-3.xlsx')
 
 # READ FILE and do stuff
-#region
 column_names = ['desc', 'ID', 'role']
-df_file = pd.read_excel(file_loc_name, sheet_name=excel_sheet, header=None, names = column_names)
+df_file = pd.read_csv(file_loc_name, sep = '\t', header=None, names = column_names, engine='python')
 df_file_out = df_file.drop_duplicates(subset='ID', keep=False)
-
 unique_IDs = df_file_out['ID'].tolist()
 
 for index, row in df_file.iterrows():
@@ -31,10 +26,8 @@ for index, row in df_file.iterrows():
         unique_IDs.append(id)
     else:
         continue
-#endregion
+
 
 # OUTPUT FILE
-#region
 df_file_out.to_excel(output, index=False)
 print('all done!')
-#endregion
