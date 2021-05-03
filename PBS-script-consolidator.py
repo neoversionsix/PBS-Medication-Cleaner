@@ -6,11 +6,11 @@ from pathlib import Path, PureWindowsPath
 # Input values
 file_loc_name = Path('//whoffice/shared/EMR/BAU/Audit Spreadsheets/PBS audits/202105/Prescriber_type_20210501.txt')
 file_loc_name = PureWindowsPath(file_loc_name)
-output = Path('C:/PBS/x-out-3.xlsx')
+output = Path('//whoffice/shared/EMR/BAU/Audit Spreadsheets/PBS audits/202105/Prescriber_type_20210501-consolidated-4.xlsx')
 
 # READ FILE and do stuff
 column_names = ['desc', 'ID', 'role']
-df_file = pd.read_csv(file_loc_name, sep = '\t', header=None, names = column_names, engine='python')
+df_file = pd.read_csv(file_loc_name, sep = '\t', header=0, names = column_names)
 df_file_out = df_file.drop_duplicates(subset='ID', keep=False)
 unique_IDs = df_file_out['ID'].tolist()
 
