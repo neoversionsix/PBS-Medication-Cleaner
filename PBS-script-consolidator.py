@@ -1,12 +1,33 @@
 # import libraries
 import pandas as pd
 import numpy as np
-from pathlib import Path, PureWindowsPath
+import os
+import pathlib as pth
+import openpyxl
 
 # Input values
-file_loc_name = Path('//whoffice/shared/EMR/BAU/Audit Spreadsheets/PBS audits/202105/Prescriber_type_20210501.txt')
-file_loc_name = PureWindowsPath(file_loc_name)
-output = Path('//whoffice/shared/EMR/BAU/Audit Spreadsheets/PBS audits/202105/Prescriber_type_20210501-consolidated-4.xlsx')
+
+output = pth.Path('//whoffice/shared/EMR/BAU/Audit Spreadsheets/PBS audits/202105/Prescriber_type_20210501-consolidated-5.xlsx')
+folder_1 = pth.Path('//whoffice/shared/EMR/BAU/Audit Spreadsheets/PBS audits/')
+
+# This will get the name of the folder we want
+
+all_folder_names = os.listdir(folder_1)
+folder_names = []
+
+for item in all_folder_names:
+    try:
+        folder_names.append(int(item))
+    except ValueError:
+        continue
+
+folder_names.sort(reverse=True)
+
+folder = folder_names[0]
+
+filename = 'Prescriber_type_' + str(folder) + '01' + '.txt'
+file_loc_name = pth.Path.joinpath(folder_1, str(folder), filename)
+file_loc_name = pth.PureWindowsPath(file_loc_name)
 
 # READ FILE and do stuff
 column_names = ['desc', 'ID', 'role']
