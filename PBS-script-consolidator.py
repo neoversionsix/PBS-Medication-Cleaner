@@ -6,7 +6,6 @@ import pathlib as pth
 import openpyxl as xl
 
 # Input values
-output = pth.Path('//whoffice/shared/EMR/BAU/Audit Spreadsheets/PBS audits/202105/Prescriber_type_20210501-consolidated-5.xlsx')
 folder_1 = pth.Path('//whoffice/shared/EMR/BAU/Audit Spreadsheets/PBS audits/')
 filename_excel = 'PBS Processing 5 - Medications_PBS_Mapping_Alignment_prodii.xlsx'
 sheet_name_excel = 'prescriber type (from PBS text)'
@@ -48,6 +47,7 @@ for index, row in df_file.iterrows():
 
 # WRITE TO EXCEL SHEET
 book = xl.load_workbook(file_loc_name_excel)
+del book[sheet_name_excel]
 writer = pd.ExcelWriter(file_loc_name_excel, engine = 'openpyxl')
 writer.book = book
 writer.sheets = dict((ws.title, ws) for ws in book.worksheets)
