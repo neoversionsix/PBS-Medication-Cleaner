@@ -3,12 +3,14 @@ import pandas as pd
 import numpy as np
 import os
 import pathlib as pth
-import openpyxl
+import openpyxl as xl
 
 # Input values
 
 output = pth.Path('//whoffice/shared/EMR/BAU/Audit Spreadsheets/PBS audits/202105/Prescriber_type_20210501-consolidated-5.xlsx')
 folder_1 = pth.Path('//whoffice/shared/EMR/BAU/Audit Spreadsheets/PBS audits/')
+filename_excel = 'PBS Processing 5 - Medications_PBS_Mapping_Alignment_prodii.xlsx'
+sheet_name_excel = 'prescriber type (from PBS text)'
 
 # This will get the name of the folder we want
 
@@ -28,6 +30,8 @@ folder = folder_names[0]
 filename = 'Prescriber_type_' + str(folder) + '01' + '.txt'
 file_loc_name = pth.Path.joinpath(folder_1, str(folder), filename)
 file_loc_name = pth.PureWindowsPath(file_loc_name)
+file_loc_name_excel = pth.Path.joinpath(folder_1, str(folder), filename_excel)
+
 
 # READ FILE and do stuff
 column_names = ['desc', 'ID', 'role']
@@ -48,7 +52,14 @@ for index, row in df_file.iterrows():
     else:
         continue
 
+# WRITE TO EXCEL SHEET
+book = xl.load_workbook(file_loc_name_excel)
+writer = pd.ExcelWriter(file_loc_name_excel, engine = 'openpyxl')
+writer.book = book
+writer.sheets = dict((ws.title, ws) for ws in book.worksheets)
+df_file_out.to_excel(writer, sheet_name_excel, index = False)
+writer.save()
 
-# OUTPUT FILE
-df_file_out.to_excel(output, index=False)
+# Give user feedback
+print('number of rows and columns:', df_file_out.shape)
 print('all done!')
