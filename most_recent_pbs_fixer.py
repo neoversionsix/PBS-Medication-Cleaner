@@ -3,7 +3,7 @@ import pandas as pd
 
 #filename_sing 5 - Medications_PBS_Mapping_Alignment_prodii.xlsx'
 #sheet_name_excel = 'prescriber type (from PBS text
-file_loc_name = r'Prescriber_type_20220901.txt'
+file_loc_name = r'p.txt'
 
 # Read the .txt document, wrangle and make the dataframe
 column_names = ['desc', 'ID', 'role']
