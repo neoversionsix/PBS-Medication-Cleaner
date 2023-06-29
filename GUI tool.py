@@ -15,6 +15,9 @@ class Application:
         self.status_label = Label(window, text="", bg="white")
         self.status_label.pack()
 
+        self.close_button = Button(window, text="Close", command=self.close_app)
+        self.close_button.pack()
+
     def load_file(self):
         self.file_loc_name = filedialog.askopenfilename(filetypes=[("Text files", "*.txt")])
         if self.file_loc_name:
@@ -28,7 +31,10 @@ class Application:
         df_file_out = self.process_file(self.file_loc_name)
         file_save_name = filedialog.asksaveasfilename(defaultextension=".xlsx")
         df_file_out.to_excel(file_save_name, index = False)
-        self.status_label["text"] = f"Saved as {file_save_name}"
+        self.status_label["text"] = f"File has been saved as {file_save_name}"
+
+    def close_app(self):
+        self.window.destroy()
 
     @staticmethod
     def process_file(file_loc_name):
@@ -41,9 +47,9 @@ class Application:
             if id not in unique_IDs:
                 df_temp = df_file[df_file['ID'] == id]
                 roles = " ".join(df_temp.role.tolist())
-                ser_temp = df_temp.iloc[0:1].copy()
-                ser_temp['role'] = roles
-                df_file_out = pd.concat([df_file_out, ser_temp], ignore_index=True)
+                df_temp_role_merged = df_temp.iloc[[0]].copy()
+                df_temp_role_merged['role'] = roles
+                df_file_out = pd.concat([df_file_out, df_temp_role_merged])
                 unique_IDs.append(id)
         return df_file_out
 
